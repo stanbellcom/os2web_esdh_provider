@@ -139,6 +139,9 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
     node_object_prepare($node);
     // Set field values:
     $node->title = $meeting['title'];
+    if (module_exists('os2dagsorden_esdh_provider')){
+      $node = os2dagsorden_esdh_provider_handle_additional_meeting($node, $meeting['agenda_name']);
+    }
 
     # The original field for title came from $meeting['title'];
     # This is a rewrite of the function to set the path automaticaly and with custom data - sutch as date.
@@ -300,12 +303,14 @@ function _os2web_esdh_provider_import_items($items) {
     
     if (module_exists('os2dagsorden_esdh_provider')){
       $node = os2dagsorden_esdh_provider_bullet_add_number($node, $item['id']);
+      $node = os2dagsorden_esdh_provider_handle_additional_bullet($node, $item['additional']);
     }
 
     if ($item['access'] === 'Lukket') {
       $node->field_os2web_meetings_bul_closed[LANGUAGE_NONE][]['value'] = 1;
       if (module_exists('os2dagsorden_esdh_provider')){
-        $node = os2dagsorden_esdh_provider_process_closed_bullet($node, $item); 
+        $node = os2dagsorden_esdh_provider_process_closed_bullet($node, $item);
+        $node = os2dagsorden_esdh_provider_handle_additional_bullet($node, $item['additional']);
       }
       node_submit($node);
       node_save($node);
