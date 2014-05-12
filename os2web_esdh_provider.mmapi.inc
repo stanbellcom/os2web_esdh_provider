@@ -334,7 +334,7 @@ function _os2web_esdh_provider_import_items($items) {
       }
       // Gather enclosures.
       foreach ($item['enclosures'] as $enclosure) {
-        if ($enclosure['access']) {
+        if ($enclosure['access'] || (module_exists('os2dagsorden_esdh_provider') && os2dagsorden_esdh_provider_import_closed_attachment())) {
           if ($file = _os2web_esdh_provider_import_file($enclosure)) {
             $node->field_os2web_meetings_enclosures[LANGUAGE_NONE][] = (array) $file;
             if (module_exists('os2dagsorden_esdh_provider'))
