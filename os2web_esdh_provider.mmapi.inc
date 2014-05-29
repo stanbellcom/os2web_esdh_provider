@@ -302,7 +302,7 @@ function _os2web_esdh_provider_import_items($items) {
     node_object_prepare($node);
     
     if (module_exists('os2dagsorden_esdh_provider')){
-      $node = os2dagsorden_esdh_provider_bullet_add_number($node, $item['id']);
+      $node = os2dagsorden_esdh_provider_bullet_add_number($node, $item['number']? $item['number'] : $item['id']);
       $node = os2dagsorden_esdh_provider_handle_additional_bullet($node, $item['additional']);
     }
 
