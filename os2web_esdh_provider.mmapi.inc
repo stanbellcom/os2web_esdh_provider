@@ -469,6 +469,11 @@ function _os2web_esdh_provider_import_file($file_meta) {
     error_log("Var: \$uri_pdf = " . print_r($uri_pdf, 1));
   }
 
+  if (variable_get('os2web_edoc_esdh_mm_is_abs', FALSE)) {//is an absolute path
+    $doc_root = realpath($_SERVER['DOCUMENT_ROOT']) . '/';
+    $uri = 'public://' . str_replace(variable_get(os2web_edoc_esdh_mm_abs_path_subs), '', $uri);
+  }
+
   $fid = db_select('file_managed', 'fm')
           ->fields('fm', array('fid'))
           ->condition('uri', $uri)
