@@ -182,7 +182,7 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
     // Type import.
     $node->field_os2web_meetings_type[LANGUAGE_NONE][0]['value'] = $meeting['type'];
     //Adding default meeting category
-    $node->field_os2web_meetings_category[LANGUAGE_NONE][0]['value']=variable_get('os2dagsorden_default_meeting_cateroty','pol');
+    $node->field_os2web_meetings_category[LANGUAGE_NONE][0]['value'] = variable_get('os2dagsorden_default_meeting_cateroty','pol');
     //Adding participants
     if (isset($meeting['participants'])){
       $node->field_os2web_meetings_partic[LANGUAGE_NONE][0]['value'] = implode(variable_get('os2dagsorden_participants_delimeter', ', '), $meeting['participants']);
@@ -210,6 +210,7 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
     $node->field_os2web_meetings_committee[LANGUAGE_NONE][0]['tid'] = $committee_term->tid;
     if (module_exists('os2dagsorden_esdh_provider')){
       os2dagsorden_esdh_provider_committee_add_subid($committee_term, $meeting['committee_id']);
+      $node = os2dagsorden_esdh_provider_assign_meeting_category($node, $meeting['committee_id']);
     }
 
     $node->field_os2web_meetings_location[LANGUAGE_NONE][0]['tid'] = _acadre_esdh_import_term($meeting['location'], 'os2web_meetings_tax_location')->tid;
